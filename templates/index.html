@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Traffic Light</title>
+        <meta charset="utf-8">
+<!--        &lt;!&ndash; For all devices: &ndash;&gt;-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <!-- Social Media symbols -->
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link rel="stylesheet" href="static/main.css">
+        <script src="static/signal.js"></script>
+    </head>
+    <body>
+
+        <form action="/" method="POST">
+            <div class="container-fluid padding">
+                <div class="row text-center padding">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <p><label for="red_time">Red Time:</label></p>
+                            <input type="number" class="form-control" name="red_time" id="red_time" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <p><label for="amber_time">Amber Time:</label></p>
+                            <input type="number" class="form-control" name="amber_time" id="amber_time" placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <p><label for="green_time">Green Time:</label></p>
+                            <input type="number" class="form-control" name="green_time" id="green_time" placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+        <div class="container-fluid">
+            <div class="col-lg-4">
+                <div class="timer">
+                    <div class="num" id="timer-num">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="trafficlight">
+            <div id="red" class="lamp red"></div>
+            <div id="yellow" class="lamp yellow"></div>
+            <div id="green" class="lamp green"></div>
+        </div>
+        <div class="pole"></div>
+        <div class="bpole"></div>
+
+        <script type="text/javascript">
+            var redT = {{ rt }};
+            var yelT = {{ at }};
+            var greT = {{ gt }};
+        </script>
+        <p class="lead">{{ summ }}</p>
+        <script src="static/signal.js"></script>
+    </body>
+
+</html>
