@@ -1,70 +1,188 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>Traffic Light</title>
-        <meta charset="utf-8">
-<!--        &lt;!&ndash; For all devices: &ndash;&gt;-->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <!-- Social Media symbols -->
-        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-        <link rel="stylesheet" href="static/main.css">
-        <script src="static/signal.js"></script>
-    </head>
-    <body>
+<head>
+	<title>Traffic Signal</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="static/design.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<font face="Avenir">
+<body>
+	<div class="jumbotron">
+		<h1>Traffic Signal Simulator</h1>
+	</div>
+	<div class="container" align="center">
+		<div class="form-group">
+			<form action='/' method="POST">
+				<label for="redvalue"><font color="red">Red Timer: </font></label>
+					<input type="number" name="redtimer"/> &nbsp; &nbsp;
+				<label for="ambervalue"><font color="orange">Amber Timer: </font></label>
+					<input type="number" name="ambertimer"/> &nbsp; &nbsp;
+				<label for="greenvalue"><font color="green">Green Timer: </font></label>
+					<input type="number" name="greentimer"/> &nbsp; &nbsp;
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+	<hr class="my4">
 
-        <form action="/" method="POST">
-            <div class="container-fluid padding">
-                <div class="row text-center padding">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <p><label for="red_time">Red Time:</label></p>
-                            <input type="number" class="form-control" name="red_time" id="red_time" placeholder="">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <p><label for="amber_time">Amber Time:</label></p>
-                            <input type="number" class="form-control" name="amber_time" id="amber_time" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <p><label for="green_time">Green Time:</label></p>
-                            <input type="number" class="form-control" name="green_time" id="green_time" placeholder="">
-                        </div>
-                    </div>
+	<script>
+		window.onload = function()
+		{
+		    var $ = function(e){
+		        return document.querySelector(e);
+		    }
+		    
+		    var setSubColor = function(c){
+		        $('#human-head').style.fill = c;
+		        $('#human-body').style.stroke = c;
+		    }
+		    
+		    // Function To Set Color
+		    var setColor = function(e, c){
+		        e.style.backgroundColor = c;
+		    }
+		  
+		    // Getting DOM objects
+		    var redLamp = $("#red");
+		    var yelLamp = $("#yellow");
+		    var greLamp = $("#green");
+		    var timerNum = $("#timer-num");
+		    
+		    // Color
+		    var green = "#00EE00";
+		    var yellow = "#DDDD00";
+		    var red = "#EE0000";
+		    var gDim = "#113311";
+		    var yDim = "#222211";
+		    var rDim = "#331111";
+		    
+		    var gOn = new isOn();
+		    var yOn = new isOn();
+		    var rOn = new isOn();
+		    
+		    // function check(n){
+		    //     n = parseInt(n);
+		    //     while(isNaN(n)){
+		    //         n = parseInt(prompt("enter a valid number!"));
+		    //     }
+		    //     return Math.floor(n);
+		    // }
+		    
+		    // Set Timer
+		    var redTimer = parseInt('{{ redT }}'); 
+		    var yelTimer = parseInt('{{ amberT }}');
+		    var greTimer = parseInt('{{ greenT }}');
+		    
+		    var totalTime = greTimer + yelTimer + redTimer;
 
-                </div>
-            </div>
-        </form>
+		    var timeCount = greTimer;
+		    
+		    if(greTimer && yelTimer && redTimer){
+		        var i = 1;
+		        var intr = setInterval(function(){
+		            if(i <= greTimer){
+		                if(rOn.getOn()){
+		                    timeCount = greTimer;
+		                }
+		        
+		                yOn.setOn(false);
+		                rOn.setOn(false);
+		                gOn.setOn(true);
+		            
+		                timerNum.innerHTML = timeCount--;
+		                // Green Light Turn On
+		                setColor(yelLamp, yDim);
+		                setColor(redLamp, rDim);
+		                setColor(greLamp, green);
+		                setSubColor("red");
+		            }else if(i > greTimer && i <= greTimer + yelTimer){
+		                if(gOn.getOn()){
+		                    timeCount = yelTimer;
+		                }
+		        
+		                gOn.setOn(false);
+		                rOn.setOn(false);
+		                yOn.setOn(true);
+		            
+		                timerNum.innerHTML = timeCount--;
+		                
+		                // Yellow Light Turn On
+		                setColor(greLamp, gDim);
+		                setColor(redLamp, rDim);
+		                setColor(yelLamp, yellow);
+		                setSubColor("red");
+		            }else{
+		                if(yOn.getOn()){
+		                    timeCount = redTimer;
+		                }
+		        
+		                gOn.setOn(false);
+		                yOn.setOn(false);
+		                rOn.setOn(true);
+		            
+		                timerNum.innerHTML = timeCount--;
+		                
+		                if(timeCount == redTimer-1)
+		                    setSubColor("green");
+		                if(timeCount == 1)
+		                    setSubColor("red");
+		                // Red Light Turn On
+		                setColor(yelLamp, yDim);
+		                setColor(greLamp, gDim);
+		                setColor(redLamp, red)
+		            }
+		            i++;
+		            // If Done, Repeat
+		            if(i-1 >= totalTime)
+		                i = 0;
+		        }, 1000); 
+		    }
+		    // else{
+		    //     alert("error, don't input 0")
+		    // }
+		    // Update Every 1 seconds
+		    
+		}
 
-        <div class="container-fluid">
-            <div class="col-lg-4">
-                <div class="timer">
-                    <div class="num" id="timer-num">0</div>
-                </div>
-            </div>
-        </div>
-        <div class="trafficlight">
-            <div id="red" class="lamp red"></div>
-            <div id="yellow" class="lamp yellow"></div>
-            <div id="green" class="lamp green"></div>
-        </div>
-        <div class="pole"></div>
-        <div class="bpole"></div>
+		// Helper
+		var isOn = function(){
+		    this.on = false;
+		    this.setOn = function(b){
+		        this.on = b;
+		    }
+		    this.getOn = function(){
+		        return this.on;
+		    }
+		}
+	</script>
 
-        <script type="text/javascript">
-            var redT = {{ rt }};
-            var yelT = {{ at }};
-            var greT = {{ gt }};
-        </script>
-        <p class="lead">{{ summ }}</p>
-        <script src="static/signal.js"></script>
-    </body>
+	<div class="container">
+	    <h5>Countdown:</h5>
+	    <div class="lead" id="timer-num">0</div>
+	    <div class="sub-light">
+	        <div class="human">
+	            <svg height="0" width="0">
+	                <g id="human">
+	                    <circle id="human-head" r="10" cx="30" cy="30"></circle>
+	                    <polyline id="human-body" points="30 30, 30 60, 40 80, 30 60, 20 80, 30 60, 30 40, 45 55, 30 40, 15 55, 30 40" style="stroke:#000000; stroke-linecap:round; 
+	    stroke-width:8"></polyline>
+	                </g>
+	            </svg>
+	        </div>
+	    </div>
+    </div>
+  
+    <div class="trafficlight">
+        <div id="red" class="lamp red"></div>
+        <div id="yellow" class="lamp yellow"></div>
+        <div id="green" class="lamp green"></div>
+    </div>
+    <hr class="my4">
 
+</body>
+</font>
 </html>

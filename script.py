@@ -1,22 +1,25 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template, request
+import time
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/', methods=['GET', 'POST'])
-def hello():
-    rt = at = gt = 0
-    rt = int(request.form['red_time'])
-    at = int(request.form['amber_time'])
-    gt = int(request.form['green_time']) 
-    summ = rt + at + gt
-    return render_template('index.html', rt=rt, at=at, gt=gt, summ=summ)
+def signal():
+	if request.method == 'POST':
+		i = 0
+		redTimer = 1
+		amberTimer = 1
+		greenTimer = 1
+		if 'redtimer' in request.form:
+			redTimer = int(request.form['redtimer'])
+		if 'ambertimer' in request.form:
+			amberTimer = int(request.form['ambertimer'])
+		if 'greentimer' in request.form:
+			greenTimer = int(request.form['greentimer'])
+		return render_template('index.html', redT=redTimer, amberT=amberTimer, greenT=greenTimer, i=i)
+	return render_template('index.html')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)

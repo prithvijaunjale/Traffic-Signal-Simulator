@@ -1,0 +1,95 @@
+/*body {
+    background-color: green;
+}*/
+
+.trafficlight{
+    width: 100px;
+    height: 300px;
+    background-color: #434343;
+    margin: 10px auto 0px auto;
+    padding: 2px;
+    border-radius: 15px;
+}
+
+.timer{
+    /*position: absolute;*/
+    width: 60px;
+    height: 100px;
+    background-color: #484848;
+    z-index: 2;
+    margin: 0px auto 0px auto;
+    left: 25px;
+    top: 42px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.timer .num{
+    margin-top: 26px;
+    text-align: center;
+    bottom: 10px;
+    font-size:45px;
+    font-weight: bold;
+    background-color: #555555;
+    border-radius: 20px;
+}
+
+.timer-holder-top{
+    position: absolute;
+    z-index: -1;
+    width: 50px;
+    height: 20px;
+    background-color: #303030;
+    top: 60px;
+    left: 85px;
+}
+
+.timer-holder-bottom{
+    position: absolute;
+    z-index: -1;
+    width: 50px;
+    height: 20px;
+    background-color: #303030;
+    top: 130px;
+    left: 85px;
+}
+
+
+/*.sub-light{
+    position: absolute;
+    width: 60px;
+    height: 100px;
+    background-color: #484848;
+    z-index: 2;
+    margin: 0px auto 0px auto;
+    left: 255px;
+    top: 177px;
+    padding: 10px;
+    border-radius: 15px;
+}*/
+
+.lamp{
+    border-radius: 100%;
+    width: 80; 
+    height: 80;
+    padding: 45px;
+    margin: 5px;
+}
+
+/*#human{
+    margin: 0 auto 0 auto;
+}*/
+
+/* Dim Color */
+/* Warna Redup */
+.lamp.red{
+    background-color: #331111;
+}
+
+.lamp.yellow{
+    background-color: #222211;
+}
+
+.lamp.green{
+    background-color: #113311;
+}
